@@ -11,6 +11,6 @@ export class GptService {
 
     // Invoke use cases only
     async orthographyCheck(orthographyDto: OrthographyDto) {
-        return await orthographyCheckUseCase({ prompt: orthographyDto.prompt });
+        return await orthographyCheckUseCase(this.openai, { prompt: orthographyDto.prompt });
     }
 }
