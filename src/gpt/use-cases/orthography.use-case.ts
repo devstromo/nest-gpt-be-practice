@@ -22,7 +22,7 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
                 Ejemplo de salida:
                 {
                     userScore: number,
-                    errors: string[], // ['error1' ->'solución'],
+                    errors: string[], // ["error1 -> solución"]
                     message: string, // Usa emojis y texto para felicitar al usuario
                 }
                 
@@ -33,17 +33,12 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
                 content: prompt
             }
         ],
-        model: "gpt-4o",
+        model: "gpt-4",
         temperature: 0.3,
         max_tokens: 150,
     });
 
-    console.log({ completion });
-    return completion.choices[0];
-
-
-    // return {
-    //     prompt: prompt,
-    //     apikey: process.env.OPENAI_API_KEY
-    // };
+    // console.log({ completion });
+    const jsonResponse = JSON.parse(completion.choices[0].message.content);
+    return jsonResponse;
 }
