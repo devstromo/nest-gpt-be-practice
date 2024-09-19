@@ -10,7 +10,15 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
         messages: [
             {
                 role: "system",
-                content: "You are a helpful assistant."
+                content: `
+                Te serán proveídos textos con posibles errores ortográficos y gramaticales,
+                Debes responder en formato JSON,
+                tu tarea es corregirlos y retornar información, soluciones,
+                también debes dar un porcentaje de acierto por el usuario,
+
+                Si no hay errores debes retornanr un mensaje de felicitaciones
+                
+                `
             },
             {
                 role: "user",
@@ -19,6 +27,7 @@ export const orthographyCheckUseCase = async (openai: OpenAI, options: Options) 
         ],
         model: "gpt-4o",
         temperature: 0.3,
+        max_tokens: 150,
     });
 
     console.log({ completion });
