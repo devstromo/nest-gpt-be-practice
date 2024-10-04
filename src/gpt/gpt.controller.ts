@@ -42,6 +42,6 @@ export class GptController {
   translate(
     @Body() translateDto: TranslateDto
   ) {
-    return this.gptService.prosConsDicusser(translateDto);
+    return this.gptService.translate(translateDto);
   }
 }
