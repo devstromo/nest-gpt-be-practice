@@ -16,10 +16,9 @@ export const translateUseCase = async (openai: OpenAI, { prompt, lang }: Options
                 `
             }
         ],
-        temperature: 0.8,
-        max_tokens: 500
+        temperature: 0.2,
     });
 
 
-    return response.choices[0].message;
+    return { message: response.choices[0].message.content };
 }
