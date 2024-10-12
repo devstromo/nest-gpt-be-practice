@@ -18,7 +18,7 @@ export const textToAudioUseCase = async (openai: OpenAI, { prompt, voice }: Opti
     }
     const selectedVoice = voices[voice] ?? 'nova';
 
-    const folder = path.resolve(__dirname, `../../../generated/audio/`);
+    const folder = path.resolve(__dirname, `../../../generated/audios/`);
     const speechFile = path.resolve(`${folder}/${new Date().getTime()}.mp3`);
 
     fs.mkdirSync(folder, { recursive: true });
