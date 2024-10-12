@@ -38,7 +38,7 @@ export class GptService {
     async textToAudioGetter(fileId: string) {
         const speechFile = path.resolve(__dirname, '../../generated/audios/', `${fileId}.mp3`);
         if (!fs.existsSync(speechFile)) {
-            new NotFoundException(`File ${fileId} not found`);
+            throw new NotFoundException(`File ${fileId} not found`);
         }
 
         return speechFile;
