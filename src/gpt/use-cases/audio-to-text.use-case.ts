@@ -16,9 +16,5 @@ export const audioToTextUseCase = async (openai: OpenAI, options: Options) => {
         language: 'es',
         response_format: 'verbose_json',
     });
-
-    console.log(response);
-
-
     return response;
 }
