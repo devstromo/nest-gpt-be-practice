@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpStatus, Param, Post, Res, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, HttpStatus, MaxFileSizeValidator, Param, ParseFilePipe, Post, Res, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { Response } from 'express';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from "multer";
@@ -84,7 +84,17 @@ export class GptController {
     })
   )
   audioToText(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 1000 * 1024 * 5, message: 'File is bigger than 5 MB' }),
+          new FileTypeValidator({ fileType: 'audio/*' })
+        ]
+      })
+    ) file: Express.Multer.File,
   ) {
+    console.log({file});
+    
     return 'done';
   }
 }
