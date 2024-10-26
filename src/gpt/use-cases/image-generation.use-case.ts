@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { downloadImageAsPng } from 'src/helpers';
 
 
 interface Options {
@@ -21,6 +22,7 @@ export const imageGenerationUseCase = async (openai: OpenAI, options: Options) =
     });
 
     // Todo: save image in FS
+    await downloadImageAsPng(response.data[0].url)
     console.log(response);
     return {
         url: response.data[0].url,
