@@ -26,9 +26,10 @@ export const imageGenerationUseCase = async (openai: OpenAI, options: Options) =
         });
 
         // Todo: save image in FS
-        const url = await downloadImageAsPng(response.data[0].url)
+        const fileName = await downloadImageAsPng(response.data[0].url)
+        const url = `${process.env.SERVER_URL}/gpt/image-generation/${fileName}`
         return {
-            url: url, // TODO: http://localhost:3000/gpt/image-generation/1729909868370.png
+            url: url,
             openAIUrl: response.data[0].url,
             revised_response: response.data[0].revised_prompt
         }
@@ -48,12 +49,11 @@ export const imageGenerationUseCase = async (openai: OpenAI, options: Options) =
         response_format: 'url',
     });
 
-    const localImagePath = await downloadImageAsPng(response.data[0].url);
-    const fileName = path.basename(localImagePath);
-    const publicUrl = `localhost:3000/${fileName}`;
+    const fileName = await downloadImageAsPng(response.data[0].url)
+    const url = `${process.env.SERVER_URL}/gpt/image-generation/${fileName}`
 
     return {
-        url: publicUrl, // TODO: http://localhost:3000/gpt/image-generation/1729909868370.png
+        url: url, // TODO: http://localhost:3000/gpt/image-generation/1729909868370.png
         openAIUrl: response.data[0].url,
         revised_response: response.data[0].revised_prompt
     }
