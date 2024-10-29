@@ -22,11 +22,10 @@ export const imageGenerationUseCase = async (openai: OpenAI, options: Options) =
     });
 
     // Todo: save image in FS
-    await downloadImageAsPng(response.data[0].url)
-    console.log(response);
+    const url = await downloadImageAsPng(response.data[0].url)
     return {
-        url: response.data[0].url,
-        localPath: '',
+        url: url,
+        openAIUrl: response.data[0].url,
         revised_response: response.data[0].revised_prompt
     }
 
