@@ -5,17 +5,15 @@ import * as sharp from 'sharp';
 import { InternalServerErrorException } from "@nestjs/common";
 
 
-/*************  ✨ Codeium Command ⭐  *************/
 /**
  * Download an image from a given URL and save it as a PNG in the './generated/images/'
  * folder. The image name is the current timestamp in milliseconds.
  *
  * @param url The URL of the image
+ * @param fullPath Optional flag to return the full path of the saved image
  * @returns The path to the saved image
  */
-
-/******  ec533fc8-8300-4c3d-b992-2e5b0ba2da1d  *******/
-export const downloadImageAsPng = async (url: string) => {
+export const downloadImageAsPng = async (url: string, fullPath: boolean = false) => {
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -35,10 +33,10 @@ export const downloadImageAsPng = async (url: string) => {
         .ensureAlpha()
         .toFile(completePath);
 
-    return imageNamePng
+    return fullPath ? completePath : imageNamePng
 }
 
-export const downloadBase64ImageAsPng = async (base64Image: string) => {
+export const downloadBase64ImageAsPng = async (base64Image: string, fullPath: boolean = false) => {
 
     // Remover encabezado
     base64Image = base64Image.split(';base64,').pop();
@@ -57,6 +55,6 @@ export const downloadBase64ImageAsPng = async (base64Image: string) => {
         .ensureAlpha()
         .toFile(completePath);
 
-    return imageNamePng;
+    return fullPath ? completePath : imageNamePng;
 
 }
