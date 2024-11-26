@@ -11,6 +11,5 @@ export const createRunUseCase = async (openai: OpenAI, options: Options) => {
         assistant_id: assistantId,
         // instructions: // Rewrite the assistant if instructions are provided.
     });
-    console.log({ run });
     return run
 }
