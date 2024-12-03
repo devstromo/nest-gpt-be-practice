@@ -6,7 +6,13 @@ import { downloadImageAsPng } from 'src/helpers';
 
 interface Options {
     imageFile: Express.Multer.File;
-    prompt: string;
+    prompt?: string;
+}
+
+const convertToBase64 = (imageFile: Express.Multer.File) => {
+    const data = fs.readFileSync(imageFile.path);
+    const base64 = Buffer.from(data).toString('base64');
+    return `data:image/${imageFile.mimetype.split('/')[1]};base64,${base64}`;
 }
 
 export const imageToTextUseCase = async (openai: OpenAI, options: Options) => {
@@ -25,7 +31,7 @@ export const imageToTextUseCase = async (openai: OpenAI, options: Options) => {
                     {
                         type: 'image_url',
                         image_url: {
-                            url: '',
+                            url: convertToBase64(imageFile),
                         }
                     }
                 ]
@@ -33,4 +39,7 @@ export const imageToTextUseCase = async (openai: OpenAI, options: Options) => {
         ]
 
     });
+
+
+    return { msg: response.choices[0].message.content };
 };
